@@ -1,0 +1,121 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WindowsFormsApp3
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        BindingList<GALJELEP> klosar = new BindingList<GALJELEP>();
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            dataGridView1.DataSource = klosar;
+
+        }
+
+        private void dodajScenoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form2 podobrazec = new Form2();
+            if (podobrazec.ShowDialog() == DialogResult.OK)
+            {
+                GALJELEP butl = new GALJELEP(podobrazec.textBox1.Text, podobrazec.textBox2.Text,
+                    podobrazec.textBox3.Text, Convert.ToInt32(podobrazec.textBox4.Text), Convert.ToInt32(podobrazec.textBox5.Text));
+                klosar.Add(butl);
+            }
+        }
+
+        private void urediButlaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form2 podobrazec = new Form2();
+            podobrazec.textBox1.Text = klosar[dataGridView1.CurrentRow.Index].IME;
+            podobrazec.textBox2.Text = klosar[dataGridView1.CurrentRow.Index].PRIIMEK;
+            podobrazec.textBox3.Text = klosar[dataGridView1.CurrentRow.Index].RAZRED;
+            podobrazec.textBox4.Text = klosar[dataGridView1.CurrentRow.Index].STAROST.ToString();
+            podobrazec.textBox5.Text = klosar[dataGridView1.CurrentRow.Index].OCENA.ToString();
+            if (podobrazec.ShowDialog() == DialogResult.OK)
+            {
+                GALJELEP butl = new GALJELEP(podobrazec.textBox1.Text, podobrazec.textBox2.Text,
+                    podobrazec.textBox3.Text, Convert.ToInt32(podobrazec.textBox4.Text), Convert.ToInt32(podobrazec.textBox5.Text));
+                klosar[dataGridView1.CurrentRow.Index] = butl;
+            }
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Potrjujete brisanje Avtist " + klosar[dataGridView1.CurrentRow.Index].IME + " " +
+                klosar[dataGridView1.CurrentRow.Index].PRIIMEK + "?", "Brisanje", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                klosar.RemoveAt(dataGridView1.CurrentRow.Index);
+            }
+        }
+    }
+}
+
+____________________________________________________________________________________________
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WindowsFormsApp3
+{
+    class CDijaki
+    {
+        string ime, priimek, razred;
+        int starost;
+        //Konstruktor to rabaš gal je lep
+        public CDijaki(string i, string p, string r, int st)
+        {
+            ime = i;
+            priimek = p;
+            razred = r;
+            starost = st;
+        }
+        //Bralno pisalne lastnosti
+        public string IME
+        {
+            get { return ime; }
+            set { ime = value; }
+        }
+        public string  PRIIMEK
+        {
+            get { return priimek; }
+            set { priimek = value; }
+        }
+        public string RAZRED
+        {
+            get { return razred; }
+            set { razred = value; }
+        }
+        public int STAROST
+        {
+            get { return starost; }
+            set { starost = value; }
+        }
+    }
+    class GALJELEP : CDijaki
+    {
+        int ocena;
+        public GALJELEP(string i, string p, string r, int st, int o) : base(i, p, r, st)
+        {
+            ocena = o;
+        }
+        public int OCENA
+        {
+            get { return ocena; }
+            set { ocena = value; }
+        }
+    }
+}
