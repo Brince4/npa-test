@@ -16,13 +16,14 @@ namespace WindowsFormsApp3
         {
             InitializeComponent();
         }
+        //Toj za to da das un class scene not
         BindingList<GALJELEP> klosar = new BindingList<GALJELEP>();
         private void Form1_Load(object sender, EventArgs e)
         {
             dataGridView1.DataSource = klosar;
 
         }
-
+        //Toj za vpis podatkov pa scene
         private void dodajScenoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form2 podobrazec = new Form2();
@@ -33,7 +34,7 @@ namespace WindowsFormsApp3
                 klosar.Add(butl);
             }
         }
-
+        //Toj za urejanje
         private void urediButlaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form2 podobrazec = new Form2();
@@ -49,7 +50,7 @@ namespace WindowsFormsApp3
                 klosar[dataGridView1.CurrentRow.Index] = butl;
             }
         }
-
+        //Toj pa za brisat scene
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Potrjujete brisanje Avtist " + klosar[dataGridView1.CurrentRow.Index].IME + " " +
